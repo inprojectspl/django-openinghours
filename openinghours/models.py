@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.db import models
+from django.db.models import CASCADE
 from django.utils.translation import ugettext_lazy as _
 from django.utils.encoding import python_2_unicode_compatible
 from openinghours.app_settings import PREMISES_MODEL
@@ -48,7 +49,7 @@ class OpeningHours(models.Model):
         verbose_name_plural = _('Opening Hours')
         ordering = ['company', 'weekday', 'from_hour']
 
-    company = models.ForeignKey(PREMISES_MODEL, verbose_name=_('Company'))
+    company = models.ForeignKey(PREMISES_MODEL, verbose_name=_('Company'), on_delete=CASCADE)
     weekday = models.IntegerField(_('Weekday'), choices=WEEKDAYS)
     from_hour = models.TimeField(_('Opening'))
     to_hour = models.TimeField(_('Closing'))
@@ -73,7 +74,7 @@ class ClosingRules(models.Model):
         verbose_name_plural = _('Closing Rules')
         ordering = ['start']
 
-    company = models.ForeignKey(PREMISES_MODEL, verbose_name=_('Company'))
+    company = models.ForeignKey(PREMISES_MODEL, verbose_name=_('Company'), on_delete=CASCADE)
     start = models.DateTimeField(_('Start'))
     end = models.DateTimeField(_('End'))
     reason = models.TextField(_('Reason'), null=True, blank=True)
