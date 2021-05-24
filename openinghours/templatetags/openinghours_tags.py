@@ -121,11 +121,9 @@ def opening_hours(location=None, concise=False):
             'name': o.get_weekday_display(),
             'from_hour': o.from_hour,
             'to_hour': o.to_hour,
-            'hours': '%s%s to %s%s' % (
-                o.from_hour.strftime('%I:%M').lstrip('0'),
-                o.from_hour.strftime('%p').lower(),
-                o.to_hour.strftime('%I:%M').lstrip('0'),
-                o.to_hour.strftime('%p').lower()
+            'hours': _('{from_hour} to {to_hour}').format(
+                from_hour=o.from_hour.strftime('%I:%M').lstrip('0') + o.from_hour.strftime('%p').lower(),
+                to_hour=o.to_hour.strftime('%I:%M').lstrip('0') + o.to_hour.strftime('%p').lower()
             )
         })
 
@@ -135,7 +133,7 @@ def opening_hours(location=None, concise=False):
             days.append({
                 'day_number': day_number,
                 'name': day_name,
-                'hours': 'Closed'
+                'hours': _('day_closed')
             })
     days = sorted(days, key=lambda k: k['day_number'])
 
@@ -159,13 +157,16 @@ def opening_hours(location=None, concise=False):
 
         for day_set in concise_days:
             if len(day_set['day_names']) > 2:
-                day_set['day_names'] = '%s to %s' % (day_set['day_names'][0],
-                                                     day_set['day_names'][-1])
+                day_set['day_names'] = _('{from_day} to {to_day}').format(
+                    from_day=day_set['day_names'][0], to_day=day_set['day_names'][-1]
+                )
             elif len(day_set['day_names']) > 1:
-                day_set['day_names'] = '%s and %s' % (day_set['day_names'][0],
-                                                      day_set['day_names'][-1])
+                day_set['day_names'] = _('{first_day} and {second_day}').format(
+                    first_day=day_set['day_names'][0], second_day=day_set['day_names'][-1]
+                )
+
             else:
-                day_set['day_names'] = '%s' % day_set['day_names'][0]
+                day_set['day_names'] = day_set['day_names'][0]
 
         days = concise_days
 

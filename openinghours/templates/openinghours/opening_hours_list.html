@@ -1,3 +1,4 @@
+{% load i18n %}
 <table>
 {% for day in days %}
 	<tr>
@@ -5,6 +6,6 @@
         <td>{{ day.hours }}</td>
     </tr>
 {% empty %}
-	Sorry, we're closed.
+	{%  trans "Sorry, we're closed." %}
 {% endfor %}
 </table>
