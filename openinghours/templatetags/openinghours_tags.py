@@ -1,6 +1,6 @@
 from django.template import Library
 from django.template.loader import get_template
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 import datetime
 
 from openinghours.models import WEEKDAYS, OpeningHours
